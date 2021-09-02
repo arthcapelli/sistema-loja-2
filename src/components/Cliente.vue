@@ -11,9 +11,7 @@
           v-model="cpfInput"
           placeholder="Insira o cpf do cliente..."
         />
-        <button class="btn-search" @click="getClienteByCpf">
-          Buscar
-        </button>
+        <button class="btn-search" @click="getClienteByCpf">Buscar</button>
       </div>
       <div class="col-md-12 full-result" v-if="showInputCliente">
         <p>Nome Completo: {{ this.nome }} {{ this.sobrenome }}</p>
@@ -29,7 +27,7 @@
 
 <script>
 export default {
-  name: 'Cliente',
+  name: "Cliente",
   props: {
     produtoId: String,
     valorTotal: String,
@@ -38,20 +36,21 @@ export default {
   },
   data: function() {
     return {
-      cpfInput: '',
-      clientes: [],
-      nome: '',
-      sobrenome: '',
-      cpf: '',
-      dataDeNascimento: '',
+      cpfInput: "",
+      nome: "",
+      sobrenome: "",
+      cpf: "",
+      dataDeNascimento: "",
       showInputCliente: false,
       mensagem: false,
-      aviso: '',
+      aviso: "",
     };
   },
   methods: {
-    getClientes: async function() {
-      const result = await fetch('http://localhost:3000/clientes')
+    getClienteByCpf: async function() {
+      const result = await fetch(
+        "http://localhost:3000/clientes/busca/" + this.cpfInput
+      )
         .then((res) => res.json())
         .catch((error) => {
           return {
@@ -60,19 +59,14 @@ export default {
           };
         });
       if (!result.error) {
-        this.clientes = result;
-      }
-    },
-    getClienteByCpf: function() {
-      const cliente = this.clientes.find((user) => {
-        return user.CPF == this.cpfInput;
-      });
-      if (cliente != undefined) {
-        this.nome = cliente.nome;
-        this.sobrenome = cliente.sobrenome;
-        this.cpf = cliente.CPF;
-        this.dataDeNascimento = cliente.dataNascimento;
+        this.nome = result.nome;
+        this.sobrenome = result.sobrenome;
+        this.cpf = result.CPF;
+        this.dataDeNascimento = result.dataNascimento;
 
+        if (!this.showInputCliente) {
+          this.showInputCliente = true;
+        }
         if (!this.showInputCliente) {
           this.showInputCliente = true;
         }
@@ -82,9 +76,10 @@ export default {
       } else {
         this.showInputCliente = false;
         this.mensagem = true;
-        this.aviso = 'CPF inválido.';
+        this.aviso = "CPF inválido.";
       }
     },
+
     addPedido: async function() {
       const newPedido = {
         produtoId: this.produtoId,
@@ -93,12 +88,12 @@ export default {
         quantidade: this.quantidade,
         clienteCPF: this.cpfInput,
       };
-      const result = await fetch('http://localhost:3000/pedidos', {
+      const result = await fetch("http://localhost:3000/pedidos", {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(newPedido),
       })
         .then((res) => res.json())
@@ -112,12 +107,9 @@ export default {
       this.showInputCliente = false;
       if (result.insertedId) {
         this.mensagem = true;
-        this.aviso = 'Pedido cadastrado com sucesso.';
+        this.aviso = "Pedido cadastrado com sucesso.";
       }
     },
-  },
-  created: function() {
-    this.getClientes();
   },
 };
 </script>

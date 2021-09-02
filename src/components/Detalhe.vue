@@ -39,7 +39,7 @@
           </p>
           <h4>
             Total : {{ finalQuantity }} * {{ price }} =
-            {{ total.toString().replace('.', ',') }}
+            {{ total.toString().replace(".", ",") }}
           </h4>
         </div>
         <div class="col-md-12">
@@ -64,9 +64,9 @@
 </template>
 
 <script>
-import Cliente from './Cliente.vue';
+import Cliente from "./Cliente.vue";
 export default {
-  name: 'Detalhe',
+  name: "Detalhe",
   components: {
     Cliente,
   },
@@ -85,7 +85,7 @@ export default {
     };
   },
   methods: {
-    switchVisibility() {
+    switchVisibility: function() {
       if (!this.showInput) {
         this.showInput = true;
       } else {
@@ -94,7 +94,7 @@ export default {
     },
     toCalculate: function() {
       this.finalQuantity = this.quantity;
-      if (this.quantity === '') {
+      if (this.quantity === "") {
         this.finalQuantity = 1;
       }
 
