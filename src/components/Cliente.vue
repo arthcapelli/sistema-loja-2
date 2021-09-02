@@ -83,7 +83,7 @@ export default {
     addPedido: async function() {
       const newPedido = {
         produtoId: this.produtoId,
-        ValorTotal: this.valorTotal,
+        ValorTotal: this.valorTotal.replace(".", ","),
         valorUnitario: this.valorUnitario,
         quantidade: this.quantidade,
         clienteCPF: this.cpfInput,
