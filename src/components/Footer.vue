@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <p>Todoso os direitos reservados <span>&copy;</span></p>
+          <p>Todos os direitos reservados <span>&copy;</span></p>
         </div>
       </div>
     </div>
@@ -11,13 +11,13 @@
 </template>
 <script>
 export default {
- name: "Footer" 
-}
+  name: 'Footer',
+};
 </script>
 <style>
-  footer {
-    text-align: center;
-    background-color: #f0513b;
-    color: #fee954;
-  }
+footer {
+  text-align: center;
+  background-color: #f0513b;
+  color: #fee954;
+}
 </style>
